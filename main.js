@@ -1,8 +1,8 @@
 const caixaPrincipal = document.querySelector(".caixa-principal");
-const caixaPerguntas= document.querySelector(".caixa-perguntas");
-const caixaAlternativas= document.querySelector(".caixa-alternativas");
+const caixaPerguntas = document.querySelector(".caixa-perguntas");
+const caixaAlternativas = document.querySelector(".caixa-alternativas");
 const caixaResultado = document.querySelector(".caixa-resultado");
-const caixaResultado = document.querySelector(".texto-resultado");
+const textoResultado = document.querySelector(".texto-resultado");
 
 
 
@@ -34,23 +34,23 @@ const perguntas = [
         ]
     },
     {
-        enunciado: " Pergunta?",
+        enunciado: " Qual carro da marca que mais atrai você para ultilizalo? ",
         alternativas: [
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: " Peugeot ",
+                afirmacao: "Conforto e Qualidade de Condução ele oferece para seus ultilizadores.",
             },
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: " fiat ",
+                afirmacao: " Pioneirismo e inovação como características marcantes, produtos de alta qualidade e tecnologia, design admirado, respeito ao consumidor e responsabilidade socioambiental ela tem de garantia coisas muito interessantes para os condutores. ",
             }
         ]
     },
     {
-        enunciado: " Pergunta?",
+        enunciado: " qual das marcas de carros acima tem a melhor durabilidade e conforto? ",
         alternativas: [
             {
-                texto: " Texto/resposta ",
+                texto: "a marca Fiat conta com carros confortáveis mais não tanto quanto o peugeot.",
                 afirmacao: " Afirmação ",
             },
             {
@@ -75,3 +75,31 @@ const perguntas = [
 ];
 
 
+let atual = 0;
+let perguntaAtual;
+let historiaFinal = "";
+
+function mostraPergunta(){
+    perguntaAtual = perguntas[atual];
+    caixaPerguntas.textContent = perguntaAtual.enunciado;
+    caixaAlternativas.textContent = "";
+    mostraAlternativa();
+}
+
+function mostraAlternativa(){
+    for(const alternativa of perguntaAtual.alternativas){
+        const botaoAlternativas = document.createElement("button");
+        botaoAlternativas.textContent = alternativa.texto;
+        caixaAlternativas.appendChild(botaoAlternativas);
+        botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa));
+        caixaAlternativas.appendChild(botaoAlternativas);
+    }
+}
+function respostaSelecionada(opcaoSelecionada){
+    const afirmacoes = opcaoSelecionada.afirmacao;
+    historiaFinal = afirmacoes;
+    atual++;
+    mostraPergunta();
+} 
+
+mostraPergunta();
