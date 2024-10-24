@@ -50,56 +50,69 @@ const perguntas = [
         enunciado: " qual das marcas de carros acima tem a melhor durabilidade e conforto? ",
         alternativas: [
             {
-                texto: "a marca Fiat conta com carros confortáveis mais não tanto quanto o peugeot.",
-                afirmacao: " Afirmação ",
+                texto: "fiat",
+                afirmacao: "a marca Fiat conta com carros confortáveis mais não tanto quanto o peugeot.",
             },
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: "peugeot",
+                afirmacao: "peugeot é a marca mais confiavel e confortável",
             }
         ]
     },
     {
-        enunciado: " Pergunta?",
+        enunciado: "qual é o problema crônico de cada marca ?",
         alternativas: [
             {
-                texto: " Texto/resposta ",
-                afirmacao: "Afirmação",
+                texto: "peugeot",
+                afirmacao: "o ar condionado apresenta um problema crõnico, segundo parte dos donos do automóveis.",
             },
             {
-                texto: " Texto/resposta ",
-                afirmacao: " Afirmação ",
+                texto: "fiat",
+                afirmacao: "barulhos na suspensão, vazamento de líquido de arrefecimento e consumo anormal do óleo do motor",
             }
         ]
     },
 ];
-
 
 let atual = 0;
 let perguntaAtual;
 let historiaFinal = "";
 
 function mostraPergunta(){
-    perguntaAtual = perguntas[atual];
-    caixaPerguntas.textContent = perguntaAtual.enunciado;
-    caixaAlternativas.textContent = "";
-    mostraAlternativa();
+if(atual >= perguntas.length){
+mostraResultado();
+return;
 }
 
-function mostraAlternativa(){
-    for(const alternativa of perguntaAtual.alternativas){
-        const botaoAlternativas = document.createElement("button");
-        botaoAlternativas.textContent = alternativa.texto;
-        caixaAlternativas.appendChild(botaoAlternativas);
-        botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa));
-        caixaAlternativas.appendChild(botaoAlternativas);
-    }
+perguntaAtual = perguntas[atual];
+caixaPerguntas.textContent = perguntaAtual.enunciado;
+caixaAlternativas.textContent = "";
+mostraAlternativas ();
 }
-function respostaSelecionada(opcaoSelecionada){
-    const afirmacoes = opcaoSelecionada.afirmacao;
-    historiaFinal = afirmacoes;
-    atual++;
-    mostraPergunta();
-} 
+
+function mostraAlternativas(){
+for(const alternativa of perguntaAtual.alternativas){
+const botaoAlternativas = document.createElement("button");
+botaoAlternativas.textContent = alternativa.texto;
+caixaAlternativas.appendChild(botaoAlternativas);
+botaoAlternativas.addEventListener("click", () => respostasSelecionadas(alternativa));
+caixaAlternativas.appendChild(botaoAlternativas);
+}
+}
+
+function respostasSelecionadas(opcaoSelecionada){
+const afirmacoes = opcaoSelecionada.afirmacao;
+historiaFinal += afirmacoes + " ";
+atual++;
+mostraPergunta();
+}
+
+function mostraResultado(){
+caixaPerguntas.textContent = "Em 2049 ...";
+textoResultado.textContent = historiaFinal;
+caixaAlternativas.textContent = "";
+}
+
+
 
 mostraPergunta();
